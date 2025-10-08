@@ -1,0 +1,25 @@
+{
+  "manifest_version": "0.2",
+  "name": "Sample TCP connection server",
+  "version": "1.0.0",
+  "description": "Sample TCP connection server for MCP",
+  "author": {
+    "name": "Microsoft Corporation"
+  },
+  "icon": "Assets/Square44x44Logo.png",
+  "server": {
+    "command": "McpServer\\McpServer.exe",
+    "args": [],
+    "env": {}
+  },
+  "capabilities": {
+    "tools": [
+      {
+        "name": "Connect",
+        "description": "Connects to the main app running on port 8000 to verify it's running."
+      }
+    ],
+    "resources": [],
+    "prompts": []
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "mcp-server-msix (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "mcp-server-msix (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
