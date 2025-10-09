@@ -12,7 +12,15 @@ A Windows MSIX packaged application that:
 - Exits when the window is closed
 
 **How to Run:**
+
+Open the `mcp-server-msix.sln` folder in Visual Studio and build and run the solution. 
+
+#### Or from the CLI
+
 ```powershell
+# Restore packages
+dotnet restore
+
 # Build the project (requires x64 platform)
 dotnet build -p:Platform=x64
 
