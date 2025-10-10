@@ -5,7 +5,6 @@ node_modules/
 bin/
 obj/
 AppPackages/
-*.pfx
 
 # Visual Studio files
 *.user
