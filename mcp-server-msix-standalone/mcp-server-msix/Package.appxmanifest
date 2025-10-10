@@ -11,8 +11,8 @@
 
   <Identity
     Name="9f3a67cd-72e7-4e02-8769-3015e4c43f3f"
-    Publisher="CN=AdminUser"
-    Version="1.0.0.0" />
+    Publisher="CN=crloewen"
+    Version="1.0.8.0" />
 
   <mp:PhoneIdentity PhoneProductId="9f3a67cd-72e7-4e02-8769-3015e4c43f3f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -62,7 +62,7 @@
     </Application>
 
     <Application Id="McpServer"
-      Executable="McpServer\McpServer.exe"
+      Executable="McpServer.exe"
       EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
         DisplayName="Sample connection MCP server"

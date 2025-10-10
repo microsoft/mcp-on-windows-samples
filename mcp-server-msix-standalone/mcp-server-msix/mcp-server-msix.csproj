@@ -44,30 +44,44 @@
     <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj" />
   </ItemGroup>
 
-  <!-- Build and include McpServer output in MSIX package -->
-  <Target Name="BuildAndCopyMcpServer" BeforeTargets="PrepareForBuild">
-    <!-- Build the SharedLibrary project first -->
-    <MSBuild Projects="..\SharedLibrary\SharedLibrary.csproj"
-             Targets="Build"
-             Properties="Configuration=$(Configuration)" />
-    <!-- Build the McpServer project separately -->
-    <MSBuild Projects="..\McpServer\McpServer.csproj"
-             Targets="Build"
-             Properties="Configuration=$(Configuration)" />
+  <!-- Publish McpServer as a single file before this project -->
+  <Target Name="PublishMcpServer" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <McpServerRid Condition="'$(Platform)' == 'x64'">win-x64</McpServerRid>
+      <McpServerRid Condition="'$(Platform)' == 'x86'">win-x86</McpServerRid>
+      <McpServerRid Condition="'$(Platform)' == 'ARM64'">win-arm64</McpServerRid>
+      <!-- Map platform to Any CPU for SharedLibrary compatibility -->
+      <SharedLibPlatform Condition="'$(Platform)' != 'x64'">Any CPU</SharedLibPlatform>
+      <SharedLibPlatform Condition="'$(Platform)' == 'x64'">Any CPU</SharedLibPlatform>
+    </PropertyGroup>
+    <MSBuild Projects="..\McpServer\McpServer.csproj" 
+             Targets="Publish" 
+             Properties="Configuration=$(Configuration);Platform=$(Platform);RuntimeIdentifier=$(McpServerRid);PublishDir=bin\$(Platform)\$(Configuration)\net8.0\publish\" />
   </Target>
 
-  <Target Name="CopyMcpServerToAppX" AfterTargets="Build">
+  <!-- Copy McpServer single executable to this project's output and include in AppX -->
+  <Target Name="CopyMcpServerFiles" AfterTargets="ResolveAssemblyReferences">
+    <PropertyGroup>
+      <McpServerPublishDir>..\McpServer\bin\$(Platform)\$(Configuration)\net8.0\publish\</McpServerPublishDir>
+    </PropertyGroup>
+    
     <ItemGroup>
-      <McpServerFiles Include="..\McpServer\bin\$(Configuration)\net8.0\**\*.*" />
+      <!-- Define McpServer single file executable to copy -->
+      <McpServerFiles Include="$(McpServerPublishDir)McpServer.exe" />
     </ItemGroup>
-    <Copy SourceFiles="@(McpServerFiles)" DestinationFolder="$(OutDir)McpServer\%(RecursiveDir)" />
+    
+    <!-- Copy the single executable to output directory -->
+    <Copy SourceFiles="@(McpServerFiles)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+    
+    <!-- Add the single executable to ReferenceCopyLocalPaths so it's included in the package -->
+    <ItemGroup>
+      <ReferenceCopyLocalPaths Include="$(OutDir)McpServer.exe">
+        <DestinationSubDirectory></DestinationSubDirectory>
+      </ReferenceCopyLocalPaths>
+    </ItemGroup>
+    
+    <Message Text="Added McpServer single file executable to ReferenceCopyLocalPaths" Importance="high" />
   </Target>
-
-  <ItemGroup>
-    <Content Include="$(OutDir)McpServer\**\*.*" CopyToOutputDirectory="PreserveNewest">
-      <Link>McpServer\%(RecursiveDir)%(Filename)%(Extension)</Link>
-    </Content>
-  </ItemGroup>
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
@@ -84,5 +98,13 @@
     <PublishReadyToRun Condition="'$(RuntimeIdentifier)' != ''">True</PublishReadyToRun>
     <!-- Trimming is not supported for framework-dependent MSIX apps -->
     <PublishTrimmed>False</PublishTrimmed>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <PackageCertificateThumbprint>573592D523A5D57C26A16F8B27A7193D4BC452BB</PackageCertificateThumbprint>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Never</AppxBundle>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
 </Project>

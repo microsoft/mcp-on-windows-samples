@@ -4,6 +4,8 @@ node_modules/
 # .NET build outputs
 bin/
 obj/
+AppPackages/
+*.pfx
 
 # Visual Studio files
 *.user
