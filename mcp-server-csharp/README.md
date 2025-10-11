@@ -1,4 +1,4 @@
-# MCP bundle C# sample
+# MCP server C# sample
 
 This sample shows how to build an MCP server, based in C#, and package it for installation on Windows in two different formats:
 
