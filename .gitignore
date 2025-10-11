@@ -15,3 +15,6 @@ AppPackages/
 # Package files
 *.nupkg
 *.snupkg
+
+*.pfx
+*.msix

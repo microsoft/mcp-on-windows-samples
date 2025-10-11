@@ -1,0 +1,18 @@
+{
+  "manifest_version": "0.1",
+  "name": "Sample-dotnet-MSIX-server",
+  "version": "1.0.0",
+  "description": "Sample dotnet server for MCP, installed via MSIX",
+  "author": {
+    "name": "Microsoft"
+  },
+  "server": {
+    "type": "binary",
+    "entry_point": "SampleDotNetMCPServer.McpServer.exee",
+    "mcp_config": {
+      "command": "SampleDotNetMCPServer.McpServer.exe",
+      "args": [
+      ]
+    }
+  }
+}
