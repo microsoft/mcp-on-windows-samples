@@ -11,7 +11,7 @@ This sample shows how to build an MCP server, based in C#, and package it for in
 `.\build-mcpb.ps1`
 
 This will build the server and create the mcpb in the root.
-Double click `mcpb.mcpb` to install.
+Double click `mcp-dotnet-mcpb-server.mcpb` to install.
 
 ### Option 2: Build as MSIX package
 `.\build-msix.ps1`

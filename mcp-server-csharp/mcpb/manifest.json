@@ -1,8 +1,8 @@
 {
   "manifest_version": "0.2",
-  "name": "Sample-MCPServer",
+  "name": "Sample-MCPB-MCPServer",
   "version": "1.0.0",
-  "description": "Sample MCP Server",
+  "description": "Sample MCPB MCP Server",
   "author": {
     "name": "test"
   },

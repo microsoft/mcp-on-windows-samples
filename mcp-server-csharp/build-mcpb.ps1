@@ -29,11 +29,11 @@ if (!(Test-Path "$targetDir\McpServer.exe")) {
 
 # Step 3: Pack the bundle
 Write-Host "Step 3: Packing the MCP bundle..." -ForegroundColor Yellow
-npx -y @anthropic-ai/mcpb pack mcpb
+npx -y @anthropic-ai/mcpb pack mcpb mcp-dotnet-mcpb-server.mcpb
 if ($LASTEXITCODE -ne 0) {
     Write-Error "Packing failed!"
     exit 1
 }
 
 Write-Host "Build and pack completed successfully!" -ForegroundColor Green
-Write-Host "You can now double-click 'mcpb.mcpb' to install the bundle." -ForegroundColor Cyan
+Write-Host "You can now double-click 'mcp-dotnet-mcpb-server.mcpb' to install the bundle." -ForegroundColor Cyan
