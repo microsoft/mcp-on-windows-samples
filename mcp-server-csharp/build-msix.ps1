@@ -32,13 +32,28 @@ Write-Host "Step 3: Creating the MSIX package..." -ForegroundColor Yellow
 
 # Check if certificate exists, if not generate one
 if (!(Test-Path ".\devcert.pfx")) {
-    Write-Host "Certificate not found, generating development certificate..." -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "Development certificate not found." -ForegroundColor Yellow
+    Write-Host "A development certificate needs to be generated and installed to your system's" -ForegroundColor White
+    Write-Host "Trusted Root Certification Authorities store to sign the MSIX package." -ForegroundColor White
+    Write-Host ""
+    $confirmation = Read-Host "Do you want to create and install the development certificate? (y/N)"
+    
+    if ($confirmation -ne 'y' -and $confirmation -ne 'Y') {
+        Write-Host "Certificate creation cancelled. Exiting build process." -ForegroundColor Red
+        exit 1
+    }
+    
+    Write-Host "Generating and installing development certificate..." -ForegroundColor Yellow
     & "..\tools\winsdk-win-x64\winsdk.exe" cert generate --manifest "msix\appxmanifest.xml" --install
     if ($LASTEXITCODE -ne 0) {
         Write-Error "Certificate generation failed!"
         exit 1
     }
 }
+
+# Ensure buildtools are available
+& "..\tools\winsdk-win-x64\winsdk.exe" update
 
 # Package the MSIX
 Write-Host "Packaging MSIX..." -ForegroundColor Yellow
