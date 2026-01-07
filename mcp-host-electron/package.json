@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "@microsoft/winappcli": "file:microsoft-winappcli-0.1.1.tgz",
-    "@modelcontextprotocol/sdk": "^1.21.0",
+    "@modelcontextprotocol/sdk": "^1.25.2",
     "electron-squirrel-startup": "^1.0.1"
   },
   "devDependencies": {
