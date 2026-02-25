@@ -19,7 +19,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@microsoft/winappcli": "file:microsoft-winappcli-0.1.1.tgz",
     "@modelcontextprotocol/sdk": "^1.21.0",
     "electron-squirrel-startup": "^1.0.1"
   },
@@ -32,6 +31,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.10.2",
     "@electron-forge/plugin-fuses": "^7.10.2",
     "@electron/fuses": "^1.8.0",
+    "@microsoft/winappcli": "^0.2.0",
     "electron": "39.1.0"
   }
 }

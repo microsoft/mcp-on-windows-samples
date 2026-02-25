@@ -17,7 +17,41 @@
   "tools": [
     {
       "name": "echo",
-      "description": "Echoes the message back to the client."
+      "description": "Echoes the message back to the client.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The message to echo back."
+          }
+        },
+        "required": ["message"],
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "text"
+                },
+                "text": {
+                  "type": "string",
+                  "description": "The echoed message."
+                }
+              },
+              "required": ["type", "text"]
+            }
+          }
+        },
+        "required": ["content"]
+      }
     }
   ],
   "tools_generated": false,
@@ -45,7 +79,37 @@
               "description": "Echoes the message back to the client.",
               "inputSchema": {
                 "type": "object",
-                "properties": {}
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "description": "The message to echo back."
+                  }
+                },
+                "required": ["message"],
+                "additionalProperties": false
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "text"
+                        },
+                        "text": {
+                          "type": "string",
+                          "description": "The echoed message."
+                        }
+                      },
+                      "required": ["type", "text"]
+                    }
+                  }
+                },
+                "required": ["content"]
               }
             }
           ]

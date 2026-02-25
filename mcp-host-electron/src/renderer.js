@@ -86,8 +86,8 @@ function displayServers(servers) {
         const serverItem = document.createElement('div');
         serverItem.className = 'server-item';
         serverItem.innerHTML = `
-            <div class="server-name">${server.name || '(no name)'}</div>
-            <div class="server-id">ID: ${server.packages?.[0]?.identifier || 'N/A'}</div>
+            <div class="server-name">${server.server?.name || '(no name)'}</div>
+            <div class="server-id">ID: ${server.server?.packages?.[0]?.identifier || 'N/A'}</div>
         `;
         
         serverItem.addEventListener('click', () => selectServerItem(server, serverItem));
@@ -102,10 +102,17 @@ async function selectServerItem(server, element) {
     
     selectedServer = server;
     
-    // Connect to server
-    showLoading('Connecting to server...');
+    // Provision agent user, then connect to server
+    showLoading('Provisioning agent user (this may take some time)...');
     
     try {
+        const provisionResponse = await window.mcpAPI.provisionAgentUser(server);
+        
+        if (!provisionResponse.success) {
+            throw new Error(provisionResponse.error);
+        }
+        
+        showLoading('Connecting to server...');
         const response = await window.mcpAPI.connectToServer(server);
         
         if (!response.success) {
