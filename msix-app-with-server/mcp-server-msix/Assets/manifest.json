@@ -1,5 +1,5 @@
 {
-  "manifest_version": "0.1",
+  "manifest_version": "0.3",
   "name": "MCP-Server-Sample-App",
   "version": "1.0.0",
   "description": "A Sample App MCP Server",
@@ -17,15 +17,105 @@
   "tools": [
     {
       "name": "get_random_fact",
-      "description": "Gets a random interesting fact from an online API."
+      "description": "Gets a random interesting fact from an online API.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "text"
+                },
+                "text": {
+                  "type": "string",
+                  "description": "A random interesting fact."
+                }
+              },
+              "required": ["type", "text"]
+            }
+          }
+        },
+        "required": ["content"]
+      }
     },
     {
       "name": "get_random_quote",
-      "description": "Gets a random inspirational quote from an online API."
+      "description": "Gets a random inspirational quote from an online API.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "text"
+                },
+                "text": {
+                  "type": "string",
+                  "description": "A random inspirational quote."
+                }
+              },
+              "required": ["type", "text"]
+            }
+          }
+        },
+        "required": ["content"]
+      }
     },
     {
       "name": "get_weather",
-      "description": "Gets current weather information for a specified city."
+      "description": "Gets current weather information for a specified city.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string",
+            "default": "London",
+            "description": "The city to get weather information for."
+          }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "text"
+                },
+                "text": {
+                  "type": "string",
+                  "description": "Current weather information for the specified city."
+                }
+              },
+              "required": ["type", "text"]
+            }
+          }
+        },
+        "required": ["content"]
+      }
     }
   ],
   "tools_generated": false,
@@ -49,19 +139,67 @@
         "tools/list": {
           "tools": [
             {
-              "name": "get_random_quote",
-              "description": "Gets a random inspirational quote from an online API.",
-              "inputSchema": {
-                "type": "object",
-                "properties": {}
-              }
-            },
-            {
               "name": "get_random_fact",
               "description": "Gets a random interesting fact from an online API.",
               "inputSchema": {
                 "type": "object",
-                "properties": {}
+                "properties": {},
+                "additionalProperties": false
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "text"
+                        },
+                        "text": {
+                          "type": "string",
+                          "description": "A random interesting fact."
+                        }
+                      },
+                      "required": ["type", "text"]
+                    }
+                  }
+                },
+                "required": ["content"]
+              }
+            },
+            {
+              "name": "get_random_quote",
+              "description": "Gets a random inspirational quote from an online API.",
+              "inputSchema": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "text"
+                        },
+                        "text": {
+                          "type": "string",
+                          "description": "A random inspirational quote."
+                        }
+                      },
+                      "required": ["type", "text"]
+                    }
+                  }
+                },
+                "required": ["content"]
               }
             },
             {
@@ -72,9 +210,34 @@
                 "properties": {
                   "city": {
                     "type": "string",
-                    "default": "London"
+                    "default": "London",
+                    "description": "The city to get weather information for."
                   }
-                }
+                },
+                "additionalProperties": false
+              },
+              "outputSchema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "const": "text"
+                        },
+                        "text": {
+                          "type": "string",
+                          "description": "Current weather information for the specified city."
+                        }
+                      },
+                      "required": ["type", "text"]
+                    }
+                  }
+                },
+                "required": ["content"]
               }
             }
           ]

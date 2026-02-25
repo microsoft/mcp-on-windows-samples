@@ -28,11 +28,35 @@ class MCPService {
         
         const servers = JSON.parse(stdout);
         
-        if (!Array.isArray(servers.servers)) {
+        if (!Array.isArray(servers.structuredContent.servers)) {
             throw new Error(`Expected an array of servers, but got: ${typeof servers}`);
         }
         
-        return servers.servers;
+        return servers.structuredContent.servers;
+    }
+
+    /**
+     * Provision the agent user via odr.exe before connecting to an MCP server
+     */
+    async provisionAgentUser(server) {
+        const identifier = server.server?.packages?.[0]?.identifier;
+        if (!identifier) {
+            throw new Error('Server configuration missing identifier.');
+        }
+
+        console.log(`Provisioning agent user for ${identifier}...`);
+
+        const { stdout, stderr } = await execFileAsync('odr.exe', [
+            'mcp',
+            'provision-agent-user'
+        ]);
+
+        if (stderr) {
+            console.error('Warning:', stderr);
+        }
+
+        console.log('Agent user provisioned successfully.');
+        return stdout;
     }
 
     /**
@@ -41,7 +65,7 @@ class MCPService {
     async connectToServer(server) {
         const identifier = server.packages?.[0]?.identifier;
         const command = "odr.exe";
-        const args = ["mcp", "--proxy", identifier];
+        const args = ["mcp", "run", "--proxy", identifier];
 
         if (!identifier) {
             throw new Error('Server configuration missing identifier.');
@@ -60,7 +84,7 @@ class MCPService {
         
         this.client = new Client({
             name: 'mcp-electron-client',
-            version: '1.0.0'
+            version: '2.0.0'
         }, {
             capabilities: {}
         });

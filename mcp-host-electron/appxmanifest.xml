@@ -14,7 +14,7 @@
   <Identity
     Name="mcp-host-electron"
     Publisher="CN=crloewen"
-    Version="1.0.0.0" />
+    Version="2.0.0.0" />
 
   <Properties>
     <DisplayName>mcp-host-electron</DisplayName>

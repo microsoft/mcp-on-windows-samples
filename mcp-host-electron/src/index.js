@@ -61,6 +61,15 @@ ipcMain.handle('mcp:fetchServers', async () => {
   }
 });
 
+ipcMain.handle('mcp:provisionAgentUser', async (event, server) => {
+  try {
+    await mcpService.provisionAgentUser(server);
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+});
+
 ipcMain.handle('mcp:connectToServer', async (event, server) => {
   try {
     const result = await mcpService.connectToServer(server);

@@ -9,6 +9,7 @@ This sample shows how to integrate your Electron application as an MCP host on t
 ## Run the sample 
 
 Before running the sample, ensure it is properly setup (run first time only)
+* `> npm install @microsoft/winappcli --save-dev` - to install the winapp cli
 * `> npm install` - to install all dependencies
 * `> npm run restore` - to restore Windows dependencies and generate dev cert if not present
 * `> npx winapp node add-electron-debug-identity` - to add identity to electron while debugging

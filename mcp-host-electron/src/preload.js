@@ -6,6 +6,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 // Expose MCP API to renderer process
 contextBridge.exposeInMainWorld('mcpAPI', {
   fetchServers: () => ipcRenderer.invoke('mcp:fetchServers'),
+  provisionAgentUser: (server) => ipcRenderer.invoke('mcp:provisionAgentUser', server),
   connectToServer: (server) => ipcRenderer.invoke('mcp:connectToServer', server),
   listTools: () => ipcRenderer.invoke('mcp:listTools'),
   callTool: (toolName, parameters) => ipcRenderer.invoke('mcp:callTool', toolName, parameters),

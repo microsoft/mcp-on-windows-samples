@@ -12,7 +12,7 @@
   <Identity
     Name="9f3a67cd-72e7-4e02-8769-3015e4c43f3f"
     Publisher="CN=crloewen"
-    Version="1.0.9.0" />
+    Version="2.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="9f3a67cd-72e7-4e02-8769-3015e4c43f3f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

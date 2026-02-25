@@ -35,11 +35,11 @@ async function fetchServerList() {
     
     const servers = JSON.parse(stdout);
     
-    if (!Array.isArray(servers.servers)) {
+    if (!Array.isArray(servers.structuredContent.servers)) {
         throw new Error(`Expected an array of servers, but got: ${typeof servers}`);
     }
     
-    return servers.servers;
+    return servers.structuredContent.servers;
 }
 
 /**
@@ -54,12 +54,19 @@ async function selectServer(servers) {
     console.log(`Found ${servers.length} MCP server(s):\n`);
     
     servers.forEach((server, index) => {
-        console.log(`${index + 1}. Name: ${server.name || '(no name)'}`);
+        console.log(`${index + 1}. Name: ${server.server.name || '(no name)'}`);
     });
+    console.log('Q. Quit');
     
     console.log('');
     
-    const answer = await askQuestion('Which server would you like to run? (Enter number): ');
+    const answer = await askQuestion('Which server would you like to run? (Enter number or Q to quit): ');
+    
+    if (answer.trim().toLowerCase() === 'q') {
+        console.log('Exiting...');
+        return null;
+    }
+    
     const choice = parseInt(answer, 10);
     
     if (isNaN(choice) || choice < 1 || choice > servers.length) {
@@ -70,12 +77,36 @@ async function selectServer(servers) {
 }
 
 /**
+ * Provision the agent user via odr.exe before connecting to an MCP server
+ */
+async function provisionAgentUser(server) {
+    const identifier = server.server.packages?.[0]?.identifier;
+    if (!identifier) {
+        throw new Error('Server configuration missing identifier.');
+    }
+
+    console.log(`Provisioning agent user for ${identifier}...\n`);
+
+    const { stdout, stderr } = await execFileAsync('odr.exe', [
+        'mcp',
+        'provision-agent-user'
+    ]);
+
+    if (stderr) {
+        console.error('Warning:', stderr);
+    }
+
+    console.log('Agent user provisioned successfully.\n');
+    return stdout;
+}
+
+/**
  * Connect to MCP server and list available tools
  */
 async function connectAndListTools(server) {
-    const identifier = server.packages?.[0]?.identifier;
+    const identifier = server.server.packages?.[0]?.identifier;
     const command = "odr.exe";
-    const args = ["mcp", "--proxy", identifier];
+    const args = ["mcp", "run", "--proxy", identifier];
 
     console.log("Identifier:" , identifier);
     console.log();
@@ -291,7 +322,10 @@ async function main() {
             return;
         }
         
-        // Step 3: Connect to server and list tools
+        // Step 3: Provision agent user for the selected server
+        await provisionAgentUser(selectedServer);
+
+        // Step 4: Connect to server and list tools
         await connectAndListTools(selectedServer);
         
     } catch (error) {
