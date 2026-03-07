@@ -28,7 +28,7 @@ class MCPService {
         
         const servers = JSON.parse(stdout);
         
-        if (!Array.isArray(servers.structuredContent.servers)) {
+        if (!Array.isArray(servers.structuredContent?.servers)) {
             throw new Error(`Expected an array of servers, but got: ${typeof servers}`);
         }
         
@@ -44,7 +44,7 @@ class MCPService {
             throw new Error('Server configuration missing identifier.');
         }
 
-        console.log(`Provisioning agent user for ${identifier}...`);
+        console.log(`Provisioning agent user for ${identifier}... (This may take some time)`);
 
         const { stdout, stderr } = await execFileAsync('odr.exe', [
             'mcp',
@@ -63,7 +63,7 @@ class MCPService {
      * Connect to an MCP server
      */
     async connectToServer(server) {
-        const identifier = server.packages?.[0]?.identifier;
+        const identifier = server.server?.packages?.[0]?.identifier;
         const command = "odr.exe";
         const args = ["mcp", "run", "--proxy", identifier];
 
@@ -71,7 +71,7 @@ class MCPService {
             throw new Error('Server configuration missing identifier.');
         }
         
-        console.log(`Connecting to: ${server.id}`);
+        console.log(`Connecting to: ${server.server.name}`);
         console.log(`Running server: ${command} ${args.join(' ')}`);
         
         // Create MCP client with stdio transport

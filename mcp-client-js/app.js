@@ -35,7 +35,7 @@ async function fetchServerList() {
     
     const servers = JSON.parse(stdout);
     
-    if (!Array.isArray(servers.structuredContent.servers)) {
+    if (!Array.isArray(servers.structuredContent?.servers)) {
         throw new Error(`Expected an array of servers, but got: ${typeof servers}`);
     }
     
@@ -54,7 +54,8 @@ async function selectServer(servers) {
     console.log(`Found ${servers.length} MCP server(s):\n`);
     
     servers.forEach((server, index) => {
-        console.log(`${index + 1}. Name: ${server.server.name || '(no name)'}`);
+        const name = server.server?.name || '(no name)';
+        console.log(`${index + 1}. Name: ${name}`);
     });
     console.log('Q. Quit');
     
@@ -85,7 +86,7 @@ async function provisionAgentUser(server) {
         throw new Error('Server configuration missing identifier.');
     }
 
-    console.log(`Provisioning agent user for ${identifier}...\n`);
+    console.log(`Provisioning agent user for ${identifier}...\n(This may take some time)\n`);
 
     const { stdout, stderr } = await execFileAsync('odr.exe', [
         'mcp',
@@ -108,13 +109,11 @@ async function connectAndListTools(server) {
     const command = "odr.exe";
     const args = ["mcp", "run", "--proxy", identifier];
 
-    console.log("Identifier:" , identifier);
     console.log();
     if (!identifier) {
         throw new Error('Server configuration missing identifier.');
     }
     
-    console.log(`\nSelected: ${server.id}`);
     console.log(`Running server: ${command} ${args.join(' ')}\n`);
     
     // Create MCP client with stdio transport
