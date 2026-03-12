@@ -81,7 +81,7 @@ async function selectServer(servers) {
  * Provision the agent user via odr.exe before connecting to an MCP server
  */
 async function provisionAgentUser(server) {
-    const identifier = server.server.packages?.[0]?.identifier;
+    const identifier = server.server?.packages?.[0]?.identifier;
     if (!identifier) {
         throw new Error('Server configuration missing identifier.');
     }
