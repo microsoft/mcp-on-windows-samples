@@ -4,8 +4,8 @@ This sample shows how to integrate your Electron application as an MCP host on t
 
 ## Requirements:
 * NodeJS - `winget install OpenJS.NodeJS.LTS`
-* @microsoft/WinAppCli npm package - [download the *.tgz package from here](https://github.com/microsoft/WinAppCli/releases) and place it in the root of this project
-* Or run `> npm install @microsoft/winappcli --save-dev` - to install the winapp cli
+* @microsoft/winappcli npm package (installed from npm as a dev dependency)
+* Optionally, run `> npm install @microsoft/winappcli --save-dev` to add or update the WinAppCli dependency
 
 ## Run the sample 
 
