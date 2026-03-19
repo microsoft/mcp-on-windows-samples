@@ -57,14 +57,13 @@ async function selectServer(servers) {
         const name = server.server?.name || '(no name)';
         console.log(`${index + 1}. Name: ${name}`);
     });
-    console.log('Q. Quit');
+    console.log('R. Return to main menu');
     
     console.log('');
     
-    const answer = await askQuestion('Which server would you like to run? (Enter number or Q to quit): ');
+    const answer = await askQuestion('Which server would you like to run? (Enter number or R to return): ');
     
-    if (answer.trim().toLowerCase() === 'q') {
-        console.log('Exiting...');
+    if (answer.trim().toLowerCase() === 'r') {
         return null;
     }
     
