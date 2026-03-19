@@ -79,14 +79,10 @@ async function selectServer(servers) {
 
 /**
  * Provision the agent user via odr.exe before connecting to an MCP server
+ * Provision the agent user via odr.exe (standalone prerequisite step)
  */
-async function provisionAgentUser(server) {
-    const identifier = server.server?.packages?.[0]?.identifier;
-    if (!identifier) {
-        throw new Error('Server configuration missing identifier.');
-    }
-
-    console.log(`Provisioning agent user for ${identifier}...\n(This may take some time)\n`);
+async function provisionAgentUser() {
+    console.log('Provisioning agent user...\n(This may take some time)\n');
 
     const { stdout, stderr } = await execFileAsync('odr.exe', [
         'mcp',
@@ -306,27 +302,57 @@ async function callTool(client, tool) {
 }
 
 /**
+ * Display main menu and handle user selection
+ */
+async function showMainMenu() {
+    let provisioned = false;
+
+    while (true) {
+        console.log('\n=== MCP Client ===');
+        console.log('1. Provision Agent User');
+        console.log('2. Select and Run MCP Server');
+        console.log('Q. Quit\n');
+
+        const answer = await askQuestion('Choose an option: ');
+        const choice = answer.trim().toLowerCase();
+
+        if (choice === 'q') {
+            console.log('Exiting...');
+            return;
+        }
+
+        if (choice === '1') {
+            await provisionAgentUser();
+            provisioned = true;
+            continue;
+        }
+
+        if (choice === '2') {
+            if (!provisioned) {
+                console.log('\nWarning: Agent user has not been provisioned in this session. You may need to run option 1 first.\n');
+            }
+
+            const servers = await fetchServerList();
+            const selectedServer = await selectServer(servers);
+
+            if (!selectedServer) {
+                continue;
+            }
+
+            await connectAndListTools(selectedServer);
+            return;
+        }
+
+        console.log('Invalid option. Please try again.');
+    }
+}
+
+/**
  * Main application entry point
  */
 async function main() {
     try {
-        // Step 1: Fetch server list
-        const servers = await fetchServerList();
-        
-        // Step 2: Let user select a server
-        const selectedServer = await selectServer(servers);
-        
-        if (!selectedServer) {
-            rl.close();
-            return;
-        }
-        
-        // Step 3: Provision agent user for the selected server
-        await provisionAgentUser(selectedServer);
-
-        // Step 4: Connect to server and list tools
-        await connectAndListTools(selectedServer);
-        
+        await showMainMenu();
     } catch (error) {
         if (error.code === 'ENOENT') {
             console.error('Error: odr.exe not found. Make sure it is in your PATH or in the current directory.');
