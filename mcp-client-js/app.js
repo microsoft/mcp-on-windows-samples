@@ -78,7 +78,6 @@ async function selectServer(servers) {
 }
 
 /**
- * Provision the agent user via odr.exe before connecting to an MCP server
  * Provision the agent user via odr.exe (standalone prerequisite step)
  */
 async function provisionAgentUser() {
