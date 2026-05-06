@@ -5,7 +5,7 @@
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>mcp_server_msix</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Platforms>x86;x64;ARM64</Platforms>
+    <Platforms>x64;ARM64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
@@ -13,12 +13,13 @@
     <Nullable>enable</Nullable>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>2eecc9f4f00f202678c75e89000a64b1cd6c74d3</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>2EC40943B3A0C971C0DDB28BFE7442D3E0CCD1BA</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Never</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    <PackageCertificateKeyFile>mcp-server-msix_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -56,7 +57,6 @@
   <Target Name="PublishMcpServer" BeforeTargets="BeforeBuild">
     <PropertyGroup>
       <McpServerRid Condition="'$(Platform)' == 'x64'">win-x64</McpServerRid>
-      <McpServerRid Condition="'$(Platform)' == 'x86'">win-x86</McpServerRid>
       <McpServerRid Condition="'$(Platform)' == 'ARM64'">win-arm64</McpServerRid>
       <!-- Map platform to Any CPU for SharedLibrary compatibility -->
       <SharedLibPlatform Condition="'$(Platform)' != 'x64'">Any CPU</SharedLibPlatform>

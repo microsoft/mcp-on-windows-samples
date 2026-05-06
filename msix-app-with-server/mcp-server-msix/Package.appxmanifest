@@ -10,15 +10,15 @@
   IgnorableNamespaces="uap uap3 uap5 rescap">
 
   <Identity
-    Name="9f3a67cd-72e7-4e02-8769-3015e4c43f3f"
-    Publisher="CN=crloewen"
+    Name="MCPSamples.ToolsTest"
+    Publisher="CN=MCP SAMPLES - DO NOT TRUST"
     Version="2.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="9f3a67cd-72e7-4e02-8769-3015e4c43f3f" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>mcp-server-msix</DisplayName>
-    <PublisherDisplayName>AdminUser</PublisherDisplayName>
+    <PublisherDisplayName>MCP Samples</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -36,8 +36,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="mcp-server-msix"
-        Description="mcp-server-msix"
+        DisplayName="Sample MCP Tools Test App"
+        Description="Tests whether sample MCP tools work, without actually using MCP"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">

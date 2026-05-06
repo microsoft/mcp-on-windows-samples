@@ -40,9 +40,10 @@ When building with `build-msix.ps1`, a development certificate is automatically 
 5. Click **View Certificate**
 6. Click **Install Certificate**
 7. Choose **Local Machine** and click **Next**
+    * If you see a User Account Control dialog, click **Yes**
 8. Select **Place all certificates in the following store**
 9. Click **Browse**
-10. Select **Trusted Root Certification Authorities**
+10. Select **Trusted People** (*not* "Trusted Publishers")
 11. Click **Next**
 12. Click **Finish**
 
