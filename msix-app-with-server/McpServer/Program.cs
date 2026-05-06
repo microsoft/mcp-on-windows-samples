@@ -27,7 +27,7 @@ public static class ApiTools
     }
 
     [McpServerTool, Description("Gets current weather information for a specified city.")]
-    public static async Task<string> GetWeather(string city = "London")
+    public static async Task<string> GetWeather(string city)
     {
         return await ApiService.GetWeatherAsync(city);
     }

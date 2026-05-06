@@ -14,12 +14,12 @@
 
   <Identity
     Name="mcp-dotnet-msix-server"
-    Publisher="CN=nikolame"
+    Publisher="CN=Microsoft MCP Samples"
     Version="2.0.0.0" />
 
   <Properties>
     <DisplayName>mcp-dotnet-msix-server</DisplayName>
-    <PublisherDisplayName>nikolame</PublisherDisplayName>
+    <PublisherDisplayName>Microsoft MCP Samples</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -36,8 +36,8 @@
       Executable="server\MCPServer.exe"
       EntryPoint="Windows.FullTrustApplication">
       <uap:VisualElements
-        DisplayName="mcp-dotnet-msix-server"
-        Description="MCP .NET server"
+        DisplayName="Sample .NET MCP server"
+        Description="Sample .NET MCP server"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
@@ -50,7 +50,7 @@
           <uap3:AppExtension
             Name="com.microsoft.windows.ai.mcpServer"
             Id="SampleDotNetMCPServer"
-            DisplayName="Sample DotNet MCP server">
+            DisplayName="Sample .NET MCP server">
             <uap3:Properties>
               <Registration>manifest.json</Registration>
             </uap3:Properties>

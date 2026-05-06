@@ -5,17 +5,6 @@ using System.Threading.Tasks;
 
 namespace SharedLibrary
 {
-    public class Quote
-    {
-        public string? Text { get; set; }
-        public string? Author { get; set; }
-    }
-
-    public class QuoteResponse
-    {
-        public Quote[]? Results { get; set; }
-    }
-
     public class ApiService
     {
         private static readonly HttpClient _httpClient = new HttpClient();
@@ -41,17 +30,10 @@ namespace SharedLibrary
                     return $"API Error: {response.StatusCode} - {response.ReasonPhrase}";
                 }
 
-                var jsonContent = await response.Content.ReadAsStringAsync();
-                
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
+                var json = await response.Content.ReadAsStringAsync();
                 
                 // Extract content and author from the response
-                var jsonDocument = JsonDocument.Parse(jsonContent);
-                var root = jsonDocument.RootElement;
-                
+                var root = JsonDocument.Parse(json).RootElement;
                 var content = root.GetProperty("content").GetString();
                 var author = root.GetProperty("author").GetString();
                 
@@ -125,11 +107,8 @@ namespace SharedLibrary
                     return $"Facts API Error: {response.StatusCode} - {response.ReasonPhrase}";
                 }
 
-                var jsonContent = await response.Content.ReadAsStringAsync();
-                
-                var jsonDocument = JsonDocument.Parse(jsonContent);
-                var root = jsonDocument.RootElement;
-                
+                var json = await response.Content.ReadAsStringAsync();
+                var root = JsonDocument.Parse(json).RootElement;
                 var factText = root.GetProperty("text").GetString();
                 
                 return $"Random Fact: {factText}";
